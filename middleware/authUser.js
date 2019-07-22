@@ -6,13 +6,10 @@ module.exports =
     try {
         findUser(req.body)
             .then(response => {
-                console.log(response)
-                if (bcrypt.compareSync(req.body.password, response[0].password)) {
-                    req.headers.username = req.body.username
-                    req.headers.password = req.body.password
+                if (response[0].username && bcrypt.compareSync(req.body.password, response[0].password)) {
                     next()
                 } else {
-                    res.status(404).json({Error: 'User is NOT authed'})
+                    res.status(404).json({Error: 'You shall not Pass'})
                 }
         })
         }

@@ -9,7 +9,6 @@ addUser = (newUser) => {
 }
 
 findUser = (user) => {
-    console.log(user)
     return db('users')
         .select('username', 'password')
         .where({ 'username': user.username})

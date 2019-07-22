@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('./userHelper')
 const authUser = require('../middleware/authUser')
 
+
 router.post('/api/register', (req, res) => {
     addUser(req.body)
         .then(response => {
@@ -14,6 +15,7 @@ router.post('/api/register', (req, res) => {
 })
 
 router.post('/api/login', authUser, (req, res) => {
+
     res.status(200).json({ Message: 'Working' })
 })
 
