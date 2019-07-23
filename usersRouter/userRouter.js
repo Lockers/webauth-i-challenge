@@ -1,26 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const restricted = require('../auth/restricted-middleware.js');
 const db = require('./userHelper')
-const authUser = require('../middleware/authUser')
 
-
-router.post('/api/register', (req, res) => {
-    addUser(req.body)
-        .then(response => {
-            res.status(201).json(response)
+router.get('/users', restricted, (req, res) => {
+    db.find()
+        .then(users => {
+            res.json(users);
         })
-        .catch(error => {
-        res.status(500).json({Error: 'Internal Server Error'})
-    })
-})
+        .catch(err => res.send(err));
+});
 
-router.post('/api/login', authUser, (req, res) => {
-
-    res.status(200).json({ Message: 'Working' })
-})
-
-router.get('/api/users', (req, res) => {
-    res.status(200).json({ Message: 'Working' })
-})
 
 module.exports = router;

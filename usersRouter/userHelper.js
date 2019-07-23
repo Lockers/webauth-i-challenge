@@ -1,20 +1,29 @@
 const knex = require('knex');
 const db = knex(require('../knexfile').development);
-const bcrypt = require('bcryptjs');
-
-addUser = (newUser) => {
-    newUser.password = bcrypt.hashSync(newUser.password, 12)
-    return db('users')
-        .insert(newUser)
-}
-
-findUser = (user) => {
-    return db('users')
-        .select('username', 'password')
-        .where({ 'username': user.username})
-}
 
 module.exports = {
-    addUser,
-    findUser
+    add,
+    find,
+    findBy,
+    findById,
+};
+
+function find() {
+    return db('users').select('id', 'username');
+}
+
+function findBy(filter) {
+    return db('users').where(filter);
+}
+
+async function add(user) {
+    const [id] = await db('users').insert(user);
+
+    return findById(id);
+}
+
+function findById(id) {
+    return db('users')
+        .where({ id })
+        .first();
 }
