@@ -1,7 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
-const userRouter = require('./usersRouter/userRouter')
-const cors = require('cors')
+const userRouter = require('./usersRouter/userRouter');
+const cors = require('cors');
 
 const session = require('express-session');
 const KnexSessionStore = require('connect-session-knex')(session);
@@ -12,9 +12,9 @@ const usersRouter = require('./usersRouter/userRouter.js');
 const server = express();
 
 server.use(helmet());
-server.use(express.json())
-server.use(cors())
-server.use('/', userRouter)
+server.use(express.json());
+server.use(cors());
+server.use('/', userRouter);
 
 server.use(session({
     name: 'sessionId', // name of the cookie
